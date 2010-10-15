@@ -510,8 +510,15 @@ class sfImage
           {
             $finfo = finfo_open(FILEINFO_MIME);
           }
+          // in php 5.3, finfo return the MIME plus ENCODING. So, if there are a ";" we take only the first part of string.
+          $mime = finfo_file($finfo, $filename);
+          if (stripos($mime, ';'))
+          {
+            $mime = strstr($mime, ';', true);
+          }
 
-          return finfo_file($finfo, $filename);
+        return $mime;
+
         }
       }
 
